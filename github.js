@@ -9,6 +9,8 @@ const colors = require('colors');
 const emoji = require('node-emoji');
 const simpleGit = require('simple-git/promise');
 
+const lotsOfEmojis = ['🐶','🐱','🐭','🐹','🐰','🦊','🦝','🐻','🐼','🦘','🦡','🐨','🐯','🦁','🐮','🐷','🐽','🐸','🐵','🙈','🙉','🙊','🐒','🐔','🐧','🐦','🐤','🐣','🐥','🦆','🦢','🦅','🦉','🦚','🦜','🦇','🐺','🐗','🐴','🦄','🐝','🐛','🦋','🐌','🐚','🐞','🐜','🦗','🕷','🕸','🦂','🦟','🦠','🐢','🐍','🦎','🦖','🦕','🐙','🦑','🦐','🦀','🐡','🐠','🐟','🐬','🐳','🐋','🦈','🐊','🐅','🐆','🦓','🦍','🐘','🦏','🦛','🐪','🐫','🦙','🦒','🐃','🐂','🐄','🐎','🐖','🐏','🐑','🐐','🦌','🐕','🐩','🐈','🐓','🦃','🕊','🐇','🐁','🐀','🐿','🦔','🐾','🐉','🐲','🌵','🎄','🌲','🌳','🌴','🌱','🌿','☘️','🍀'];
+  
 /**
  *
  * @param {simpleGit.SimpleGit} sg
@@ -31,10 +33,11 @@ async function constructPrMsg(sg, branch) {
  * @param {string} combinedBranch
  */
 function constructTrainNavigation(branchToPrDict, currentBranch, combinedBranch) {
-  let contents = '<pr-train-toc>\n\n#### PR chain:\n';
+  let contents = '<pr-train-toc>\n\n### PR train:\n';
   contents = Object.keys(branchToPrDict).reduce((output, branch) => {
-    const maybeHandRight = branch === currentBranch ? '👉 ' : '';
-    const maybeHandLeft = branch === currentBranch ? ' 👈 **YOU ARE HERE**' : '';
+    const emoji = lotsOfEmojis[Math.floor(Math.random() * lotsOfEmojis.length)];
+    const maybeHandRight = branch === currentBranch ? emoji + ' ' : '';
+    const maybeHandLeft = branch === currentBranch ? (' ' + emoji + ' **You are here**') : ' ' + emoji;
     const combinedInfo = branch === combinedBranch ? ' **[combined branch]** ' : ' ';
     output += `${maybeHandRight}#${branchToPrDict[branch].pr}${combinedInfo}(${branchToPrDict[
       branch
